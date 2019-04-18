@@ -8,7 +8,7 @@ import App from "./containers/App";
 ReactDOM.render(
 
     <Provider store={configureStore()}>
-
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQfrejthnm4WMYdrrxYh6YBn0R6-7OQQM&libraries=places" />
         <App />
     </Provider>
     , document.getElementById('root'));
