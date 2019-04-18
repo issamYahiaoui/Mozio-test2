@@ -2,9 +2,10 @@
   "name": "test2",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://issamYahiaoui.github.io/mozio-test2",
+  "homepage": "https://issamYahiaoui.github.io/Mozio-test2",
   "dependencies": {
     "connected-react-router": "^6.4.0",
+    "gh-pages": "^2.0.1",
     "google-maps-react": "^2.0.2",
     "history": "^4.9.0",
     "react": "^16.8.6",
@@ -23,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
