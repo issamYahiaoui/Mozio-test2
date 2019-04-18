@@ -2,6 +2,7 @@
   "name": "test2",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://issamYahiaoui.github.io/mozio-test2",
   "dependencies": {
     "connected-react-router": "^6.4.0",
     "google-maps-react": "^2.0.2",
