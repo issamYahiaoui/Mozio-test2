@@ -4,7 +4,7 @@ import  {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
-import {setRuntimeVariable} from "../../redux/actions";
+import {fetchDistance, setRuntimeVariable} from "../../redux/actions";
 import  '../style.css'
 import SearchInput from "../../components/SearchInput";
 class SearchPage extends Component {
@@ -35,41 +35,63 @@ class SearchPage extends Component {
     };
 
     handleSelect = (name,address) => {
-        geocodeByAddress(address)
-            .then(results => getLatLng(results[0]))
-            .then(latLng => console.log('Success', latLng))
-            .catch(error => console.error('Error', error));
+        this.props.onChange({
+            name : name ,
+            value : address
+        })
+        console.log('my name ...', name)
+        try{
+            geocodeByAddress(address)
+                .then(results => getLatLng(results[0]))
+                .then(latLng => {
+
+                })
+                .catch(error => console.error('Error', error));
+        }catch(e){
+            alert(e)
+        }
+
     };
+
+
 
     render() {
 
-
+        console.log(this.props.startPoint)
 
         return (
             <div className="container">
-                <form >
-                    <div className={"autocomplete-container"}>
+                <form className={"column"} >
+                    <div className={"row"}>
                         <div>
                             <label>Start Point</label>
-                            {/*<input onChange={this.onChange} name="startPoint" type="text"/>*/}
+
                             <SearchInput
                                 name={"startPoint"}
-                                address={this.props.startPoint}
+                                address={this.props.root.startPoint}
                                 onChange={this.handleChange}
-                                onSelect={this.handleSelect()}
+                                onSelect={this.handleSelect}
+                                googleCallbackName="initOne"
                             />
                         </div>
-                        <div>
+
+                        <div >
                             <label >End Point</label>
-                            <input onChange={this.onChange} name="endPoint" type="text"/>
+                            <SearchInput
+                                name={"endPoint"}
+                                address={this.props.root.endPoint}
+                                onChange={this.handleChange}
+                                onSelect={this.handleSelect}
+                                googleCallbackName="initOne"
+                            />
                         </div>
                     </div>
-                    <div >
-                        <div>
+                    <div   className={"row"} >
+                        <div >
                             <label >Date</label>
                             <input onChange={this.onChange} name="date" type="date"/>
                         </div>
-                        <div>
+                        <div >
                             <label > Passengers Number</label>
                             <input onChange={this.onChange} name="passengersNb" type="text"/>
                         </div>
@@ -80,8 +102,11 @@ class SearchPage extends Component {
                         <button  onClick={this.onSubmit}  >
                             Submit
                         </button>
+
                     </div>
                 </form>
+
+
             </div>
         );
     }
@@ -97,6 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
     onChange: (payload) => {
         dispatch(setRuntimeVariable(payload))
     },
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

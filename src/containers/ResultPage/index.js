@@ -1,9 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {setRuntimeVariable} from "../../redux/actions";
+import {fetchDistance, setRuntimeVariable} from "../../redux/actions";
+import {GoogleApiWrapper} from "google-maps-react";
 
 class ResultPage extends Component {
+
+
+    fetchDistance = ()=>{
+        console.log('fetching distance ...')
+        this.props.fetchDistance({
+            origins : this.props.root.startPoint ,
+            destinations :this.props.root.endPoint
+        })
+
+    }
+
+    componentWillMount() {
+        this.fetchDistance()
+    }
+
     render() {
+        console.log(this.props)
 
         const {startPoint,endPoint,date,passengersNb,distance} = this.props.root
         return (
@@ -51,6 +68,11 @@ const mapDispatchToProps = (dispatch) => ({
     onChange: (payload) => {
         dispatch(setRuntimeVariable(payload))
     },
+    fetchDistance: (payload) => {
+        dispatch(fetchDistance(payload))
+    },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResultPage);
+export default connect(mapStateToProps, mapDispatchToProps)(GoogleApiWrapper({
+    apiKey : "AIzaSyBYezs6ze6ZeaU7-tG0Cz-I6_1bd2U8eSc"
+})(ResultPage));

@@ -10,5 +10,13 @@
 
 
 .autocomplete-container{
-    margin : 20px
+
+}
+.column {
+    display: flex;
+    flex-direction: row;
+}
+.row{
+    display: flex;
+    flex-direction: row;
 }
