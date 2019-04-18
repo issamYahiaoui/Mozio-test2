@@ -1,13 +1,13 @@
 {
-  "main.css": "/mozio-test2/static/css/main.2546219f.chunk.css",
-  "main.js": "/mozio-test2/static/js/main.375ed0cc.chunk.js",
-  "main.js.map": "/mozio-test2/static/js/main.375ed0cc.chunk.js.map",
-  "runtime~main.js": "/mozio-test2/static/js/runtime~main.001177b9.js",
-  "runtime~main.js.map": "/mozio-test2/static/js/runtime~main.001177b9.js.map",
-  "static/js/2.f63e9874.chunk.js": "/mozio-test2/static/js/2.f63e9874.chunk.js",
-  "static/js/2.f63e9874.chunk.js.map": "/mozio-test2/static/js/2.f63e9874.chunk.js.map",
-  "index.html": "/mozio-test2/index.html",
-  "precache-manifest.9c244539a5dca39852614d2770794b11.js": "/mozio-test2/precache-manifest.9c244539a5dca39852614d2770794b11.js",
-  "service-worker.js": "/mozio-test2/service-worker.js",
-  "static/css/main.2546219f.chunk.css.map": "/mozio-test2/static/css/main.2546219f.chunk.css.map"
+  "main.css": "/Mozio-test2/static/css/main.2546219f.chunk.css",
+  "main.js": "/Mozio-test2/static/js/main.33563108.chunk.js",
+  "main.js.map": "/Mozio-test2/static/js/main.33563108.chunk.js.map",
+  "runtime~main.js": "/Mozio-test2/static/js/runtime~main.be9e0045.js",
+  "runtime~main.js.map": "/Mozio-test2/static/js/runtime~main.be9e0045.js.map",
+  "static/js/2.f63e9874.chunk.js": "/Mozio-test2/static/js/2.f63e9874.chunk.js",
+  "static/js/2.f63e9874.chunk.js.map": "/Mozio-test2/static/js/2.f63e9874.chunk.js.map",
+  "index.html": "/Mozio-test2/index.html",
+  "precache-manifest.aeb04eb1bcfd54d6983748c2ee123446.js": "/Mozio-test2/precache-manifest.aeb04eb1bcfd54d6983748c2ee123446.js",
+  "service-worker.js": "/Mozio-test2/service-worker.js",
+  "static/css/main.2546219f.chunk.css.map": "/Mozio-test2/static/css/main.2546219f.chunk.css.map"
 }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/mozio-test2/precache-manifest.9c244539a5dca39852614d2770794b11.js"
+  "/Mozio-test2/precache-manifest.aeb04eb1bcfd54d6983748c2ee123446.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/mozio-test2/index.html", {
+workbox.routing.registerNavigationRoute("/Mozio-test2/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
