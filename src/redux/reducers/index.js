@@ -8,10 +8,11 @@ export default function runtime(state = {
     passengersNb : 1 ,
     date : '2019-04-18' ,
     distance : null ,
+    duration : null ,
     fetchingDistanceStarted :false ,
     fetchingDistanceFailed :  false ,
-    origins : "" ,
-    destinations : ""
+    origins : null ,
+    destinations : null
 
 
 }, action) {

@@ -4,7 +4,11 @@ import PlacesAutocomplete, {
     getLatLng,
 } from 'react-places-autocomplete';
 import ReactGoogleMapLoader from "react-google-maps-loader"
-
+import './style.css'
+import Card from "@material-ui/core/Card";
+import List from "@material-ui/core/es/List/List";
+import ListItem from "@material-ui/core/es/ListItem/ListItem";
+import Divider from "@material-ui/core/Divider";
 class SearchInput extends Component {
     constructor(props) {
         super(props);
@@ -39,10 +43,10 @@ class SearchInput extends Component {
                                     <input
                                         {...getInputProps({
                                             placeholder: 'Search Places ...',
-                                            className: 'location-search-input',
+                                            className: 'location-search-input form-control input',
                                         })}
                                     />
-                                    <div className="autocomplete-dropdown-container">
+                                    <List className="autocomplete-dropdown-container">
                                         {loading && <div>Loading...</div>}
                                         {suggestions.map(suggestion => {
                                             const className = suggestion.active
@@ -53,17 +57,22 @@ class SearchInput extends Component {
                                                 ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                                                 : { backgroundColor: '#ffffff', cursor: 'pointer' };
                                             return (
-                                                <div
-                                                    {...getSuggestionItemProps(suggestion, {
-                                                        className,
-                                                        style,
-                                                    })}
-                                                >
-                                                    <span>{suggestion.description}</span>
+                                                <div>
+                                                    <ListItem
+                                                        {...getSuggestionItemProps(suggestion, {
+                                                            className,
+                                                            style,
+                                                        })}
+                                                    >
+                                                        <span>{suggestion.description}</span>
+                                                    </ListItem>
+                                                    <Divider light />
                                                 </div>
+
+
                                             );
                                         })}
-                                    </div>
+                                    </List>
                                 </div>
                             )}
                         </PlacesAutocomplete>

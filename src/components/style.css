@@ -1,0 +1,26 @@
+
+header{
+    height: 100px;
+}
+footer{
+    height: 300px ;
+}
+
+
+.form-control {
+    transition: .25s border ease-in-out;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent;
+    color: #575e66;
+    border: 0;
+    border-bottom: 2px solid #444;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.form-control:focus {
+    border-bottom-color: #2a5ecc;
+}
+

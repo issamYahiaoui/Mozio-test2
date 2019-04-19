@@ -19,7 +19,7 @@ class App extends Component {
                             <Route exact path="/" render={(routeProps) => (
                                 <SearchPage  {...routeProps} />
                             )} />
-                            <Route exact path="/search" render={(routeProps) => (
+                            <Route exact path="/result" render={(routeProps) => (
                                 <ResultPage  {...routeProps}/>
                             )} />
                         </Switch>
