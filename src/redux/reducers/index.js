@@ -17,12 +17,7 @@ export default function runtime(state = {
     origins : null ,
     destinations : null,
     travelMode : 'DRIVING' ,
-    errors : {
-        startPoint: null ,
-        endPoint : null ,
-        passengersNb : null ,
-        date : null ,
-    }
+
 
 
 }, action) {

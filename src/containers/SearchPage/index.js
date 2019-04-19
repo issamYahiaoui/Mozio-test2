@@ -16,6 +16,8 @@ import Button from "@material-ui/core/es/Button/Button";
 import Icon from "@material-ui/core/Icon";
 import queryString from 'query-string'
 import {clean, isBlank} from "../../utils";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 
 const styles = theme => ({
     card: {
@@ -37,9 +39,21 @@ const styles = theme => ({
 });
 class SearchPage extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = { errors : {
+                startPoint: null ,
+                endPoint : null ,
+                passengersNb : null ,
+                date : null ,
+            }}
+    }
 
     componentDidMount() {
+
         const {onChange}= this.props
+
+        //Simulate DeeplLinking
         const values = queryString.parse(this.props.location.search)
         if(values.startPoint) onChange({name:'startPoint',value : values.startPoint})
         if(values.endPoint) onChange({name:'endPoint',value : values.endPoint})
@@ -57,13 +71,21 @@ class SearchPage extends Component {
     }
 
      onSubmit= async (e)=>{
-        //TODO : do some validation on inputs
+
 
         console.log('on submit')
         e.preventDefault()
-         console.log(this.props.root.errors)
-        await this.fetchDis()
-        this.props.history.push('/result')
+        if(this.props.root.startPoint !== ''   && this.props.root.endPoint !== '' && this.props.root.date !== '' && this.props.root.passengersNb !== ''  ){
+            await this.fetchDis()
+            this.props.history.push('/result')
+        }else{
+            // So Ashamed of this , but due to time :(
+            if(this.props.root.startPoint === '')  await this.setState({errors : {...this.state.errors,startPoint: "Start Point is required !"}})
+            if(this.props.root.endPoint === '')  await this.setState({errors : {...this.state.errors,endPoint: "End Point is required !"}})
+            if(this.props.root.date === '')  await this.setState({errors : {...this.state.errors,date: "Date is required !"}})
+            if(this.props.root.passengersNb === '')  await this.setState({errors : {...this.state.errors,passengersNb: "Passengers Number is required !"}})
+        //
+            }
 
     }
 
@@ -102,7 +124,7 @@ class SearchPage extends Component {
     fetchDis =()=>{
 
 
-        console.log('fetchDis ...', this.props)
+
         let that= this
         let service = new this.props.google.maps.DistanceMatrixService();
 
@@ -124,17 +146,29 @@ class SearchPage extends Component {
 
         const { classes } = this.props;
 
-        console.log(this.props.startPoint)
+
+
+        console.log(this.state)
 
         return (
             <div className={"container"}>
+
             <Card className={classes.card}>
 
                 <CardHeader
                 title={"Search Destinations"}
                 />
                 <CardContent>
+                    {
+                        Object.keys(this.state.errors).map((keyName, i) => (
+                            <ListItem  key={i}>
+                                <span  className={"errSpan"}> {this.state.errors[keyName]}</span>
+                            </ListItem>
+                        ))
+                    }
                     <form className={""} >
+
+
                         <div className={"row"}>
                             <div className={"search-input-container"}>
                                 <label>Start Point</label>

@@ -12,11 +12,10 @@ import Divider from "@material-ui/core/Divider";
 class SearchInput extends Component {
     constructor(props) {
         super(props);
-        this.state = { address: '' };
+
     }
 
     handleChange = address => {
-        console.log('address',address)
         this.props.onChange(this.props.name,address)
     };
 
