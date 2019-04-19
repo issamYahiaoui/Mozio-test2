@@ -15,6 +15,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/es/Button/Button";
 import Icon from "@material-ui/core/Icon";
 import queryString from 'query-string'
+import {clean, isBlank} from "../../utils";
 
 const styles = theme => ({
     card: {
@@ -57,11 +58,16 @@ class SearchPage extends Component {
 
      onSubmit= async (e)=>{
         //TODO : do some validation on inputs
+
         console.log('on submit')
         e.preventDefault()
+         console.log(this.props.root.errors)
         await this.fetchDis()
         this.props.history.push('/result')
+
     }
+
+
 
     handleChange = (name,address) => {
         this.props.onChange({
@@ -158,6 +164,7 @@ class SearchPage extends Component {
                             <div className={"column"}>
 
                                 <TextField
+
                                     type={"date"}
                                     name="date"
                                     value={this.props.root.date}
@@ -168,6 +175,7 @@ class SearchPage extends Component {
                             </div>
                             <div >
                                 <TextField
+
                                     type={"number"}
                                     name="passengersNb"
                                     label="Passengers Number"

@@ -28,8 +28,8 @@ class SearchInput extends Component {
         return (
             <ReactGoogleMapLoader
                 params={{
-                    key: "AIzaSyBYezs6ze6ZeaU7-tG0Cz-I6_1bd2U8eSc", // Define your api key here
-                    libraries: "places,geometry", // To request multiple libraries, separate them with a comma
+                    key: "AIzaSyDdfGGp_xZc9P1kGN3e8UAcIBHHNuJ4IWc",
+                    libraries: "places,geometry",
                 }}
                 render={(googleMaps, error) =>
                     googleMaps ? (
@@ -38,8 +38,11 @@ class SearchInput extends Component {
                             onChange={this.handleChange}
                             onSelect={this.handleSelect}
                         >
-                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                <div>
+                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
+                            {
+                                //TODO : merge sugestions from google with suggestions from database
+                                return (
+                                    <div>
                                     <input
                                         {...getInputProps({
                                             placeholder: 'Search Places ...',
@@ -74,7 +77,11 @@ class SearchInput extends Component {
                                         })}
                                     </List>
                                 </div>
-                            )}
+                                )
+                            }
+
+
+                            }
                         </PlacesAutocomplete>
                     )   :   (
                         <div>
