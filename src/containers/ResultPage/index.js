@@ -34,6 +34,8 @@ class ResultPage extends Component {
 
 
 
+
+
     async componentDidMount() {
         const {onChange}= this.props
         const values = queryString.parse(this.props.location.search)
@@ -44,14 +46,17 @@ class ResultPage extends Component {
         if(values.distance) onChange({name:'distance',value : values.distance})
         if(values.duration) onChange({name:'duration',value : values.duration})
 
-
+        if(this.props.root.origins &&  this.props.root.destinations)   {
+            this.fetchDirections()
+        }
 
     }
 
 
     fetchDirections =()=>{
 
-        const{google,origins,destinations} = this.props
+        const{origins,destinations} = this.props.root
+        const{google} = this.props
         const DirectionsService = new google.maps.DirectionsService();
 
         this.props.fetchDirections({
@@ -68,7 +73,8 @@ class ResultPage extends Component {
 
     render() {
 
-        if(this.props.origins &&  this.props.destinations)    this.fetchDirections()
+
+
 
         console.log('res props ..',this.props)
 
