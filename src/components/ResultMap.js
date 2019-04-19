@@ -12,12 +12,12 @@ export default class ResultMap extends Component {
     }
 
     componentDidMount() {
-        const {google}= this.props
+        const {google,origins,destinations}= this.props
         const DirectionsService = new google.maps.DirectionsService();
 
         DirectionsService.route({
-            origin: new google.maps.LatLng(41.8507300, -87.6512600),
-            destination: new google.maps.LatLng(41.8525800, -87.6514100),
+            origin: new google.maps.LatLng(origins.lat, origins.lng),
+            destination: new google.maps.LatLng(destinations.lat, destinations.lng),
             travelMode: google.maps.TravelMode.DRIVING,
         }, (result, status) => {
             if (status === google.maps.DirectionsStatus.OK) {

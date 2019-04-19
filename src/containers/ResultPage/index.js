@@ -33,10 +33,6 @@ class ResultPage extends Component {
 
 
 
-     callback(response, status) {
-        // See Parsing the Results for
-        // the basics of a callback function.
-    }
 
 
     fetchDis =()=>{
@@ -65,17 +61,9 @@ class ResultPage extends Component {
                 }
             });
     }
-    fetchDistance = ()=>{
-
-        this.props.fetchDistance({
-            origins : this.props.root.startPoint ,
-            destinations :this.props.root.endPoint
-        })
-
-    }
 
     componentWillMount() {
-        // this.fetchDistance()
+
         this.fetchDis()
     }
 
@@ -84,7 +72,7 @@ class ResultPage extends Component {
         console.log('res props ..',this.props)
 
         const { classes } = this.props;
-        const {startPoint,endPoint,date,passengersNb,distance} = this.props.root
+        const {startPoint,endPoint,date,passengersNb,distance,duration} = this.props.root
         return (
 
                 <div className="container">
@@ -127,8 +115,18 @@ class ResultPage extends Component {
 
 
                                 <ListItem className="distanceView">
+                                    Travel Mode :
+                                    <span className={classes.resSpan}> DRIVING </span>
+
+                                </ListItem>
+                                <ListItem className="distanceView">
                                     Distance :
                                     <span className={classes.resSpan}> {distance ? distance.text : 'Not FOUND'} </span>
+
+                                </ListItem>
+                                <ListItem className="distanceView">
+                                    Duration :
+                                    <span className={classes.resSpan}> {duration ? duration.text : 'Not FOUND'} </span>
 
                                 </ListItem>
 
@@ -146,8 +144,8 @@ class ResultPage extends Component {
                              google={this.props.google}
                              containerElement={<div style={{ height: `400px` }} />}
                              mapElement={<div style={{ height: `100%` }} />}
-                             // origins={this.props.root.origins}
-                             // destinations={this.props.root.destinations}
+                             origins={this.props.root.origins}
+                             destinations={this.props.root.destinations}
                          />
                      </Card>
 
@@ -174,9 +172,7 @@ const mapDispatchToProps = (dispatch) => ({
     onChange: (payload) => {
         dispatch(setRuntimeVariable(payload))
     },
-    fetchDistance: (payload) => {
-        dispatch(fetchDistance(payload))
-    },
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GoogleApiWrapper({
