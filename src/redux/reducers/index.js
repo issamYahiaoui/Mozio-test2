@@ -9,10 +9,14 @@ export default function runtime(state = {
     date : '2019-04-18' ,
     distance : null ,
     duration : null ,
-    fetchingDistanceStarted :false ,
-    fetchingDistanceFailed :  false ,
+    directions : null ,
+    fetchingDistanceDurationStarted :false ,
+    distanceDurationError :  null ,
+    fetchingDirectionsStarted :false ,
+    directionsError :  null ,
     origins : null ,
-    destinations : null
+    destinations : null,
+    travelMode : 'DRIVING'
 
 
 }, action) {

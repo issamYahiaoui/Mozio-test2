@@ -4,7 +4,7 @@ import  {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
-import {fetchDistance, setRuntimeVariable} from "../../redux/actions";
+import {fetchDirections, fetchDistance, fetchDistanceDuration, setRuntimeVariable} from "../../redux/actions";
 import  '../style.css'
 import SearchInput from "../../components/SearchInput";
 import Card from "@material-ui/core/es/Card/Card";
@@ -38,11 +38,12 @@ class SearchPage extends Component {
 
 
     componentDidMount() {
+        const {onChange}= this.props
         const values = queryString.parse(this.props.location.search)
-        if(values.startPoint) this.onChange({name:'startPoint',value : values.startPoint})
-        if(values.endPoint) this.onChange({name:'endPoint',value : values.endPoint})
-        if(values.date) this.onChange({name:'date',value : values.date})
-        if(values.passengersNb) this.onChange({name:'passengersNb',value : values.passengersNb})
+        if(values.startPoint) onChange({name:'startPoint',value : values.startPoint})
+        if(values.endPoint) onChange({name:'endPoint',value : values.endPoint})
+        if(values.date) onChange({name:'date',value : values.date})
+        if(values.passengersNb) onChange({name:'passengersNb',value : values.passengersNb})
     }
 
     onChange = (e)=>{
@@ -54,10 +55,11 @@ class SearchPage extends Component {
 
     }
 
-    onSubmit=(e)=>{
+     onSubmit= async (e)=>{
         //TODO : do some validation on inputs
         console.log('on submit')
         e.preventDefault()
+        await this.fetchDis()
         this.props.history.push('/result')
     }
 
@@ -91,9 +93,29 @@ class SearchPage extends Component {
 
     };
 
+    fetchDis =()=>{
+
+
+        console.log('fetchDis ...', this.props)
+        let that= this
+        let service = new this.props.google.maps.DistanceMatrixService();
+
+        this.props.fetchDistanceDuration(
+            {
+                googleService : service,
+                origins : this.props.root.startPoint,
+                destinations :this.props.root.endPoint,
+                travelMode : this.props.root.travelMode
+            }
+        )
+
+    }
+
+
 
 
     render() {
+
         const { classes } = this.props;
 
         console.log(this.props.startPoint)
@@ -155,8 +177,6 @@ class SearchPage extends Component {
                                 />
                             </div>
                         </div>
-
-
                         <div className="btn-submit">
                             <Button variant="contained" onClick={this.onSubmit} color="primary" className={classes.button}>
                                 Send
@@ -185,6 +205,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     onChange: (payload) => {
         dispatch(setRuntimeVariable(payload))
+    },
+    fetchDirections: (payload) => {
+
+        dispatch(fetchDirections(payload))
+    },
+    fetchDistanceDuration: (payload) => {
+
+        dispatch(fetchDistanceDuration(payload))
     },
 
 });

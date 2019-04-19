@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchDistance, setRuntimeVariable} from "../../redux/actions";
+import {fetchDirections, fetchDistance, fetchDistanceDuration, setRuntimeVariable} from "../../redux/actions";
 import {GoogleApiWrapper} from "google-maps-react";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import Card from "@material-ui/core/Card";
@@ -11,7 +11,8 @@ import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import Divider from "@material-ui/core/es/Divider/Divider";
 import {GoogleMap, withGoogleMap,Marker} from "react-google-maps";
 import ResultMap from '../../components/ResultMap'
-
+import queryString from "query-string";
+import CircularProgress from '@material-ui/core/CircularProgress';
 const styles = theme => ({
     card: {
         width: 400,
@@ -33,41 +34,41 @@ class ResultPage extends Component {
 
 
 
+    async componentDidMount() {
+        const {onChange}= this.props
+        const values = queryString.parse(this.props.location.search)
+        if(values.startPoint) onChange({name:'startPoint',value : values.startPoint})
+        if(values.endPoint) onChange({name:'endPoint',value : values.endPoint})
+        if(values.date) onChange({name:'date',value : values.date})
+        if(values.passengersNb) onChange({name:'passengersNb',value : values.passengersNb})
+        if(values.distance) onChange({name:'distance',value : values.distance})
+        if(values.duration) onChange({name:'duration',value : values.duration})
 
 
-    fetchDis =()=>{
 
-
-         console.log('fetchDis ...', this.props)
-        let that= this
-        let service = new this.props.google.maps.DistanceMatrixService();
-        service.getDistanceMatrix(
-            {
-                origins: [this.props.root.startPoint],
-                destinations: [this.props.root.endPoint],
-                travelMode: 'DRIVING',
-            }, (res,status)=>{
-                console.log('res of fetch ...' , res )
-                console.log('status of fetch ...' , status)
-                if(status === 'OK'){
-                    that.props.onChange({
-                        name : 'distance',
-                        value : res.rows[0].elements[0].distance
-                    })
-                    that.props.onChange({
-                        name : 'duration',
-                        value : res.rows[0].elements[0].duration
-                    })
-                }
-            });
     }
 
-    componentWillMount() {
 
-        this.fetchDis()
+    fetchDirections =()=>{
+
+        const{google,origins,destinations} = this.props
+        const DirectionsService = new google.maps.DirectionsService();
+
+        this.props.fetchDirections({
+            googleService : DirectionsService,
+            origin : new google.maps.LatLng(origins.lat, origins.lng),
+            destination :new google.maps.LatLng(destinations.lat, destinations.lng),
+            travelMode : this.props.root.travelMode
+            })
+
     }
+
+
+
 
     render() {
+
+        if(this.props.origins &&  this.props.destinations)    this.fetchDirections()
 
         console.log('res props ..',this.props)
 
@@ -121,12 +122,23 @@ class ResultPage extends Component {
                                 </ListItem>
                                 <ListItem className="distanceView">
                                     Distance :
-                                    <span className={classes.resSpan}> {distance ? distance.text : 'Not FOUND'} </span>
+                                    {
+                                        this.props.root.fetchingDistanceDurationStarted?
+                                            <CircularProgress />
+                                        :
+                                        <span className={classes.resSpan}> {distance ? distance.text : 'Not FOUND'} </span>
+                                    }
 
                                 </ListItem>
                                 <ListItem className="distanceView">
                                     Duration :
+                                    {
+                                        this.props.root.fetchingDistanceDurationStarted?
+                                            <CircularProgress />
+                                            :
                                     <span className={classes.resSpan}> {duration ? duration.text : 'Not FOUND'} </span>
+                                    }
+
 
                                 </ListItem>
 
@@ -139,14 +151,20 @@ class ResultPage extends Component {
 
 
 
-                     <Card className={classes.card}>
+                     <Card style={{margin : 10, textAlign : 'center'}} className={classes.card}>
+                         {
+                             this.props.root.fetchingDirectionsStarted?
+                                 <CircularProgress />
+                                 :
+
                          <Map
                              google={this.props.google}
                              containerElement={<div style={{ height: `400px` }} />}
                              mapElement={<div style={{ height: `100%` }} />}
-                             origins={this.props.root.origins}
-                             destinations={this.props.root.destinations}
+                             directions={this.props.root.directions}
+                             fetchDirections={this.fetchDirections}
                          />
+                         }
                      </Card>
 
 
@@ -172,9 +190,11 @@ const mapDispatchToProps = (dispatch) => ({
     onChange: (payload) => {
         dispatch(setRuntimeVariable(payload))
     },
+    fetchDirections: (payload) => {
+
+        dispatch(fetchDirections(payload))
+    },
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GoogleApiWrapper({
-    apiKey : "AIzaSyDdfGGp_xZc9P1kGN3e8UAcIBHHNuJ4IWc"
-})(withStyles(styles)(ResultPage)));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ResultPage));
