@@ -54,6 +54,7 @@ class SearchPage extends Component {
         const {onChange}= this.props
 
         //Simulate DeeplLinking
+        // You concat params in the url : /?startPoint='''endPoint='' ... and so on
         const values = queryString.parse(this.props.location.search)
         if(values.startPoint) onChange({name:'startPoint',value : values.startPoint})
         if(values.endPoint) onChange({name:'endPoint',value : values.endPoint})
